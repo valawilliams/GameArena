@@ -138,10 +138,10 @@ public class Rectangle
 		double otherYPos = other.getYPosition();
 		double otherHalfWidth = other.getWidth() / 2;
 		double otherHalfHeight = other.getHeight() / 2;
-		return (xPosition + width/2 <= otherXPos - otherHalfWidth &&
-			xPosition - width/2 >= otherYPos + otherHalfWidth &&
-			yPosition + height/2 <= otherXPos - otherHalfHeight &&
-			yPosition - height/2 >= otherYPos + otherHalfHeight);
+		return (xPosition + width/2 >= otherXPos - otherHalfWidth &&
+			xPosition - width/2 <= otherXPos + otherHalfWidth &&
+			yPosition + height/2 >= otherYPos - otherHalfHeight &&
+			yPosition - height/2 <= otherYPos + otherHalfHeight);
 	}
 
 	/**
