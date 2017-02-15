@@ -10,19 +10,15 @@ public class Rectangle
 	// Feel free to more instance variables if you think it will 
 	// support your work... 
 	
-	private double xPosition;			// The X coordinate of centre of this Rectangle
-	private double yPosition;			// The Y coordinate of centre of this Rectangle
-	private double width;				// The width of this Rectangle
-	private double height;				// The height of this Rectangle
+	private double xPosition;		// The X coordinate of centre of this Rectangle
+	private double yPosition;		// The Y coordinate of centre of this Rectangle
+	private double width;			// The width of this Rectangle
+	private double height;			// The height of this Rectangle
 	private String colour = "WHITE";	// The colour of this Rectangle
-
-										// Permissable colours are 8 bit hexadecimal 
-                                        // RGB values in the format #RRGGBB. e.g.
-                                        //
-                                        // Pure red is FF0000
-                                        // Pure red is 00FF00
-                                        // Pure red is 0000FF
-
+						// Permissable colours are 8 bit hexadecimal 
+	private double xIncrement;		// The X increment for this Rectangle
+	private double yIncrement;		// The Y Increment for this Rectangle
+ 
 	/**
 	 * Obtains the current position of this Rectangle.
 	 * @return the X coordinate of this Rectangle within the GameArena.
@@ -86,12 +82,79 @@ public class Rectangle
 		return colour;
 	}
 
-	public Rectangle(double x, double y, double w, double h, String col)
+	/**
+	 * Move the Rectangle Left
+	 * @param xMin the minimum xPosition
+	 * @return false if unable to move
+	 */
+	public Boolean moveLeft(double xMin)
+	{
+		if (xPosition == xMin)
+			return false;
+		xPosition -= xIncrement;
+		if (xPosition < xMin)
+			xPosition = xMin;
+		return true;
+	}
+
+	/**
+	 * Move the Rectangle Right
+	 * @param xMax the maximum xPosition
+	 * @return false if unable to move
+	 */
+	public Boolean moveRight(double xMax)
+	{
+		if (xPosition == xMax)
+			return false;
+		xPosition += xIncrement;
+		if (xPosition > xMax)
+			xPosition = xMax;
+		return true;
+	}
+
+	/**
+	 * Move the Rectangle Down
+	 * @param yMax the maximum yPosition
+	 * @return false if unable to move
+	 */
+	public Boolean moveDown(double yMax)
+	{
+		if (yPosition == yMax)
+			return false;
+		yPosition += yIncrement;
+		if (yPosition > yMax)
+			yPosition = yMax;
+		return true;
+	}
+
+	/**
+	 * Checks whether Rectangle touching another Rectangle
+	 * @param Rectangle otherRect
+	 * @return true if touching
+	 */
+	public Boolean touching(Rectangle other)
+	{
+		double otherXPos = other.getXPosition();
+		double otherYPos = other.getYPosition();
+		double otherHalfWidth = other.getWidth() / 2;
+		double otherHalfHeight = other.getHeight() / 2;
+		return (xPosition + width/2 <= otherXPos - otherHalfWidth &&
+			xPosition - width/2 >= otherYPos + otherHalfWidth &&
+			yPosition + height/2 <= otherXPos - otherHalfHeight &&
+			yPosition - height/2 >= otherYPos + otherHalfHeight);
+	}
+
+	/**
+	 * Constructor
+	 */
+	public Rectangle(double x, double y, double w, double h, String col, double xInc, double yInc)
 	{
 		xPosition = x;
 		yPosition = y;
 		width = w;
 		height = h;
 		colour = col;
+		xIncrement = xInc;
+		yIncrement = yInc;
 	}	
 }
