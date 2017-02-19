@@ -22,6 +22,12 @@ public class Raindrop
 
 	/**
 	 * Constructor
+	 * @param x middle of raindrop on x-axis
+	 * @param y middle of raindrop on y-axis
+	 * @param w width of raindrop
+	 * @param h height of raindrop
+	 * @param yInc distance raindrop will fall
+	 * @param arena GameArea object for adding raindrop Rectangles
 	 */
 	public Raindrop(double x, double y, double w, double h, double yInc, GameArena arena)
 	{
