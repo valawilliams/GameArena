@@ -74,6 +74,15 @@ public class Rectangle
 	}
 
 	/**
+	 * Sets the colour of this Rectangle.
+	 * @params a textual description of the colour of this Rectangle.
+	 */
+	public void setColour(String newColour)
+	{
+		colour = newColour;
+	}
+
+	/**
 	 * Obtains the colour of this Rectangle.
 	 * @return a textual description of the colour of this Rectangle.
 	 */

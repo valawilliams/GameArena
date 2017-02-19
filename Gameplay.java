@@ -12,6 +12,8 @@ public class Gameplay {
 	int rainMovement = 5;			// distance for rain to fall (modified by level)
 	String borderColour = "GREY";		// changed from "#999999"
 	String bottomColour = "RED";		// changed from "#CC1100"
+	int bucketSize = 100;			// size of bucket
+	int bucketMovement = 10;		// distance for bucket to slide
 
 	// GameArena sizes/positions
 	double GAWMax; 			// arena Max Width - right hand side of arena
@@ -35,6 +37,7 @@ public class Gameplay {
 
 	GameArena arena = new GameArena(maxArenaWidth, maxArenaHeight);
 	Raindrop raindrop[] = new Raindrop[100];	// maximum possible number of Raindrops
+	Bucket bucket;
 
 
 	/** Constructor
@@ -103,6 +106,9 @@ public class Gameplay {
 	 */
 	public void createBucket(int level)
 	{
+		bucket = new Bucket(GAWMid, bottomEdgeY-(bucketSize/2), 
+					bucketSize, bucketSize, 
+					(double)bucketMovement, arena);
 	}
 
 	/**
@@ -160,7 +166,10 @@ public class Gameplay {
 			arena.pause();
 			for (int i = 0; i < numberOfRainDrops; i++)
 				raindrop[i].moveDown(bottomEdgeY);
-			;
+			if (arena.leftPressed())
+				bucket.moveLeft(PWMin + bucketSize/2);
+			else if (arena.rightPressed())
+				bucket.moveRight(PWMax - bucketSize/2);		
 		}
 	}
 }
