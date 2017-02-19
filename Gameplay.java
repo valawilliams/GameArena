@@ -22,7 +22,8 @@ public class Gameplay {
 	double GAHMin;			// arena Min Co-ordinate on Y Axis - top of arena
 	double EdgesX;			// X edges are 3% of total arena - width of left/right hand border
 	double EdgesY;			// Y edges are 8% of total arena - depth of top border
-	double missedLine; 		// Red line at Bottom of arena - ?GOD ALONE KNOWS?
+	double redLineDepth; 		// Red line at Bottom of arena
+	double bottomEdgeY;
 	
 	// Playable area sizes/positions
 	double PWMax;			// Max Play Arena Width - right hand side of playable area
@@ -70,11 +71,12 @@ public class Gameplay {
 		GAHMin = GAHMax - GAHMax;		// arena Min Co-ordinate on Y Axis
 		EdgesX = GAWMax*0.03;			// X edges are 3% of total arena
 		EdgesY = GAHMax*0.08;			// Y edges are 8% of total arena
-		missedLine = GAHMax - 25; 		// Red line at Bottom of arena
+		redLineDepth = 10; 			// Red line at Bottom of arena
+		bottomEdgeY = GAHMax - redLineDepth;
 
 		// Calculate size of Playable Area
 		PWMax = GAWMax - EdgesX;		// Max Play Area Width
-		PHMax = GAHMax - 20;			// Max Play Height
+		PHMax = GAHMax - redLineDepth;		// Max Play Height
 		PWMin = GAWMin + EdgesX;		// Min Play Area
 		PHMin = (GAHMin + (EdgesY - 25));	// Max Play Area
 		PWMid = PWMax*0.5;			// Middle Of Play Width
@@ -85,7 +87,7 @@ public class Gameplay {
 		Rectangle Eborder = new Rectangle(GAWMax, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Left Border
 		Rectangle Wborder = new Rectangle(GAWMin, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Right Border
 		Rectangle Nborder = new Rectangle(GAWMid, GAHMin, GAWMax, EdgesY, borderColour, 0, 0);	// Top Border
-		Rectangle Sborder = new Rectangle(GAWMid, GAHMax, PWMax, 10, bottomColour, 0, 0);	// Bottom Border
+		Rectangle Sborder = new Rectangle(GAWMid, GAHMax, PWMax, redLineDepth, bottomColour, 0, 0);	// Bottom Border
 		arena.addRectangle(Eborder);
 		arena.addRectangle(Wborder);
 		arena.addRectangle(Nborder);
@@ -130,7 +132,7 @@ public class Gameplay {
 		double xPos = xMin + xGap/2;
 		for (int i = 0; i < numberOfRainDrops; i++)
 		{
-			raindrop[i] = new Raindrop(xPos, GAHMin + EdgesY, 
+			raindrop[i] = new Raindrop(xPos, PHMin, 
 						   sizeOfRainDrops, sizeOfRainDrops, 
 						   (double)(rainMovement + level), arena);
 			xPos += xGap;
@@ -157,7 +159,8 @@ public class Gameplay {
 		{
 			arena.pause();
 			for (int i = 0; i < numberOfRainDrops; i++)
-				raindrop[i].moveDown(PHMax);
+				raindrop[i].moveDown(bottomEdgeY);
+			;
 		}
 	}
 }
