@@ -10,15 +10,15 @@ public class Bucket
 	private double width;				// The widest part of this Bucket
 	private double height;				// The highest part of this Bucket
 	private String outlineColour = "YELLOW";	// The colour of the Bucket outline
-	private String insideColour = "BLACK";		// The initial colour of the inside of the Bucket
+	private String insideColour = "PINK";		// The initial colour of the inside of the Bucket
 	private double xIncrement;			// The distance for this Bucket to slide each time
 
 	// The relative width and height of the rectangles making up the Bucket shape
 	// The numbers are the ratio of each rectangle compared to the whole (i.e. each array adds up to 1.0)
 	// The bucket has a base and two sides, followed by a middle.
 	// The middle is made of 20 narrow strips, initially coloured black, which can be coloured as the bucket fills
-	private double outlineWidth =  10;
-	private double outlineHeight = 60;
+	private double outlineWidth =  4;
+	private double outlineHeight = 4;
 	private int numOutlines = 3;			// number of rectangles in outline of bucket
 	private int numInsides = 20;			// number of rectangles inside bucket
 	private int numFilled = 0;			// count of rectangles inside bucket that are full
@@ -143,4 +143,41 @@ public class Bucket
 			return true;
 		return false;
 	}
+ 
+	/**
+	 * Obtains the current position of this bucket
+	 * @return the X coordinate of this Bucket within the GameArena.
+	 */
+	public double getXPosition()
+	{
+		return xPosition;
+	}
+
+	/**
+	 * Obtains the current position of this bucket
+	 * @return the Y coordinate of this Bucket within the GameArena.
+	 */
+	public double getYPosition()
+	{
+		return yPosition;
+	}
+
+	/**
+	 * Obtains the width of this Bucket
+	 * @return the width of this Bucket, in pixels.
+	 */
+	public double getWidth()
+	{
+		return width;
+	}
+
+	/**
+	 * Obtains the height of this Bucket
+	 * @return the height of this Bucket, in pixels.
+	 */
+	public double getHeight()
+	{
+		return height;
+	}
+
 }

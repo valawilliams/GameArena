@@ -75,19 +75,32 @@ public class Raindrop
 	}
 
 	/**
-	 * Checks whether Raindrop is touching another Rectangle
-	 * @param Rectangle otherRect
+	 * Checks whether Raindrop is touching another object
+	 * @param x xposition of other object
+	 * @param y yposition of other object
+	 * @param w width of other object
+	 * @param h height of other object
 	 * @return true if touching
 	 */
-	public Boolean touching(Rectangle other)
+	public Boolean touching(double x, double y, double w, double h)
 	{
-		double otherXPos = other.getXPosition();
-		double otherYPos = other.getYPosition();
-		double otherHalfWidth = other.getWidth() / 2;
-		double otherHalfHeight = other.getHeight() / 2;
-		return (xPosition + width/2 >= otherXPos - otherHalfWidth &&
-			xPosition - width/2 <= otherXPos + otherHalfWidth &&
-			yPosition + height/2 >= otherYPos - otherHalfHeight &&
-			yPosition - height/2 <= otherYPos + otherHalfHeight);
+		return (xPosition + width/2 >= x - w/2 &&
+			xPosition - width/2 <= x + w/2 &&
+			yPosition + height/2 >= y - h/2 &&
+			yPosition - height/2 <= y + h/2);
+	}
+
+	/**
+	 * Destructor
+	 * Removes raindrop from arena
+	 * @param arena GameArea object for removing raindrop Rectangles
+	 */
+	public void destroy(GameArena arena)
+	{
+		for (int i = 0; i < numDrops; i++)
+		{
+			arena.removeRectangle(drop[i]);
+			drop[i] = null;
+		}
 	}
 }

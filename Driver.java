@@ -13,7 +13,7 @@ public class Driver
 		{
 			game.createBucket(level);
 			game.createRain(level, maxLevel);
-			game.play(level);
+			game.play(level, maxLevel);
 			game.deleteRain(level);
 			game.deleteBucket(level);
 			level++;

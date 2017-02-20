@@ -11,9 +11,15 @@ public class Gameplay {
 	int maxRainDropSize = 50;		// size of rain drop (modified by level)
 	int rainMovement = 5;			// distance for rain to fall (modified by level)
 	String borderColour = "GREY";		// changed from "#999999"
-	String bottomColour = "RED";		// changed from "#CC1100"
+	String bottomColour[] = {"RED",		// changed from "#CC1100"
+				 "#E0FFFF", "#D0FFFF", "#C0FFFF", "#B0FFFF", "#A0FFFF", "#90FFFF", 
+				 "#80FFFF", "#70FFFF", "#60FFFF", "#50FFFF", "#40FFFF", "#30FFFF", 
+				 "#20FFFF", "#10FFFF", "#0FFFFF", "#0EFFFF", "#0DFFFF", "#0CFFFF",
+				 "#0BFFFF", "#0AFFFF", "#09FFFF", "#08FFFF", "#07FFFF", "#06FFFF",
+				 "#05FFFF", "#04FFFF", "#03FFFF", "#02FFFF", "#01FFFF", "#00FFFF"};
 	int bucketSize = 100;			// size of bucket
 	int bucketMovement = 10;		// distance for bucket to slide
+	int maxRainDrops = 100;			// maximum number of raindrops
 
 	// GameArena sizes/positions
 	double GAWMax; 			// arena Max Width - right hand side of arena
@@ -35,69 +41,55 @@ public class Gameplay {
 	double PWMid;			// Middle Of Play Width - middle of playable area on x-axis
 	double PHMid;			// Middle Of Play Height - middle of playable area on y-axis
 
+	Rectangle Eborder, Wborder, Nborder, Sborder;		
+
 	GameArena arena = new GameArena(maxArenaWidth, maxArenaHeight);
-	Raindrop raindrop[] = new Raindrop[100];	// maximum possible number of Raindrops
+	Raindrop raindrop[] = new Raindrop[maxRainDrops];	// maximum possible number of Raindrops
 	Bucket bucket;
 
 
-	/** Constructor
-	 * @param GAWMax Gets the Max Width Coordinate of the GameArena on the X-Axis
-	 * @param GAHMax Gets the Max Height Coordinate of the GameArena on the Y-Axis
-	 * @param GAWMid Calculates the Central Coordinate of the GameArena on the X-Axis
-	 * @param GAHMid Calculates the Central Coordinate of the GameArena on the Y-Axis
-	 * @param GAWMin Calculates the Minimum Coordinate of the GameArena on the X-Axis
-	 * @param GAHMin Calculates the Minimum Coordinate of the GameArena on the Y-Axis
-	 * @param EdgesX Calculates the space in the GameArena which is used for the borders at the GAWMin and GAWMax and to Calculate the Play Area
-	 * @param EdgesY Calculates the space in the GameArena which is used for the borders at the GAHMin and GAHMax and to Calculate the Play Area
-	 * @param PWMax Calculates the Playable Width Max Coordinate on the X-Axis Minus the Border
-	 * @param PHMAX Calculates the Playable Width Max Coordinate on the Y-Axis Minus the Border
-	 * @param PWMid Calculates the Central Coordinate of the Playable Area on the X-Axis
-	 * @param PHMid Calculates the Central Coordinate of the Playable Area on the Y-Axis
-	 * @param PWMin Calculates the Minimum Coordinate of the Playable Area on the X-Axis
-	 * @param PHMin Calculates the Minimum Coordinate of the Playable Area on the Y-Axis
-	 * @param Nboard Creates a Rectangle to form a Border at the TOP of the GameArena
-	 * @param Eboard Creates a Rectangle to form a Border at the RIGHT of the GameArena
-	 * @param Sboard Creates a Rectangle to form a Border at the BOTTOM of the GameArena
-	 * @param Wboard Creates a Rectangle to form a Border at the LEFT of the GameArena
+	/** Constructor creates the game arena, with borders
 	 */
-	
-	public Gameplay() 
+	public Gameplay()
 	{
 		// create the game arena
 		// GameArena arena = new GameArena(maxArenaWidth, maxArenaHeight);
 
-		GAWMax = arena.getArenaWidth(); 	// arena Max Width
-		GAHMax = arena.getArenaHeight();	// arena Max Height
-		GAWMid = arena.getArenaWidth()/2;	// arena Midpoint on X axis
-		GAHMid = arena.getArenaHeight()/2;	// arena Midpoint on Y Axis
-		GAWMin = GAWMax - GAWMax;		// arena Min Co-ordinate on X Axis
-		GAHMin = GAHMax - GAHMax;		// arena Min Co-ordinate on Y Axis
+		GAWMax = arena.getArenaWidth(); 	// Max Width Coordinate of the GameArena on the X-axis
+		GAHMax = arena.getArenaHeight();	// Max Height Coordinate of the GameArena on the Y-axis
+		GAWMid = arena.getArenaWidth()/2;	// Midpoint Coordinate of the GameArena on the X-axis
+		GAHMid = arena.getArenaHeight()/2;	// Midpoint Coordinate of the GameArena on the on Y-axis
+		GAWMin = GAWMax - GAWMax;		// Minimum Coordinate of the GameArena on the X-axis
+		GAHMin = GAHMax - GAHMax;		// Minimum Coordinate of the GameArena on the Y-axis
 		EdgesX = GAWMax*0.03;			// X edges are 3% of total arena
 		EdgesY = GAHMax*0.08;			// Y edges are 8% of total arena
 		redLineDepth = 10; 			// Red line at Bottom of arena
 		bottomEdgeY = GAHMax - redLineDepth;
 
 		// Calculate size of Playable Area
-		PWMax = GAWMax - EdgesX;		// Max Play Area Width
-		PHMax = GAHMax - redLineDepth;		// Max Play Height
-		PWMin = GAWMin + EdgesX;		// Min Play Area
-		PHMin = (GAHMin + (EdgesY - 25));	// Max Play Area
-		PWMid = PWMax*0.5;			// Middle Of Play Width
-		PHMid = PHMax*0.5;			// Middle Of Play Height
+		PWMax = GAWMax - EdgesX;		// Max Width Coordinate of the Playable Area on the X-axis (GameArena minus border)
+		PHMax = GAHMax - redLineDepth;		// Max Height Coordinate of the Playable Area on the Y-axis (GameArena minus border)
+		PWMin = GAWMin + EdgesX;		// Min Width Coordinate of the Playable Area (GameArena plus border)
+		PHMin = (GAHMin + (EdgesY - 25));	// Min Height Coordinate of the Playable Area (GameArea plus top border)
+					// WHY DOES PHMin USE THIS NUMBER, RATHER THAN GAHMin + EdgesY ??????
+		PWMid = PWMax*0.5;			// Midpoint Coordinate of the Playable Area on the X-axis
+		PHMid = PHMax*0.5;			// Midpoint Coordinate of the Playable Area on the Y-axis
 		
 		
 		// Draw Border	
-		Rectangle Eborder = new Rectangle(GAWMax, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Left Border
-		Rectangle Wborder = new Rectangle(GAWMin, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Right Border
-		Rectangle Nborder = new Rectangle(GAWMid, GAHMin, GAWMax, EdgesY, borderColour, 0, 0);	// Top Border
-		Rectangle Sborder = new Rectangle(GAWMid, GAHMax, PWMax, redLineDepth, bottomColour, 0, 0);	// Bottom Border
-		arena.addRectangle(Eborder);
-		arena.addRectangle(Wborder);
-		arena.addRectangle(Nborder);
-		arena.addRectangle(Sborder);
+		Eborder = new Rectangle(GAWMax, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Left Border
+		Wborder = new Rectangle(GAWMin, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Right Border
+		Nborder = new Rectangle(GAWMid, GAHMin, GAWMax, EdgesY, borderColour, 0, 0);	// Top Border
+		Sborder = new Rectangle(GAWMid, GAHMax-redLineDepth/2, PWMax, redLineDepth, bottomColour[0], 0, 0);	// Bottom Border
+		arena.addRectangle(Eborder);		// show border rectangle at right of GameArena
+		arena.addRectangle(Wborder);		// show border rectangle at left of GameArena
+		arena.addRectangle(Nborder);		// show border rectangle at top of GameArena
+		arena.addRectangle(Sborder);		// show border rectangle at bottom of GameArena
 
 		//Dropped Items Test Size = Ball Diameter 12 which equates to (24,24) Rectangle
 
+		for (int i = 0; i < maxRainDrops; i++)
+			raindrop[i] = null;
 	}
 
 	/**
@@ -138,9 +130,10 @@ public class Gameplay {
 		double xPos = xMin + xGap/2;
 		for (int i = 0; i < numberOfRainDrops; i++)
 		{
-			raindrop[i] = new Raindrop(xPos, PHMin, 
-						   sizeOfRainDrops, sizeOfRainDrops, 
-						   (double)(rainMovement + level), arena);
+			if (raindrop[i] == null)
+				raindrop[i] = new Raindrop(xPos, PHMin, 
+							   sizeOfRainDrops, sizeOfRainDrops, 
+							   (double)(rainMovement + level), arena);
 			xPos += xGap;
 		}
 	}
@@ -158,14 +151,42 @@ public class Gameplay {
 	 * returns when the user has finished the level
 	 * @param level the current game level
 	 */
-	public void play(int level)
+	public void play(int level, int maxLevel)
 	{
+		int i, c;
 		int numberOfRainDrops = level * 2;
+		double sizeOfRainDrops = ((maxLevel + 1 - level)/maxLevel) * maxRainDropSize;	// level determines what percentage of maxsize
+
 		while (true)
 		{
 			arena.pause();
-			for (int i = 0; i < numberOfRainDrops; i++)
-				raindrop[i].moveDown(bottomEdgeY);
+			for (i = 0; i < numberOfRainDrops; i++)
+			{
+				if (raindrop[i] != null)
+				{
+					raindrop[i].moveDown(bottomEdgeY-sizeOfRainDrops/2);
+					if (raindrop[i].touching(bucket.getXPosition(), bucket.getYPosition(), 
+								 bucket.getWidth(), bucket.getHeight()))
+					{
+						bucket.fill(1);	// change the fill amount depending on level
+						raindrop[i].destroy(arena);	// destroy raindrop
+						raindrop[i] = null;
+						createRain(level, maxLevel);
+					}
+					else if (raindrop[i].touching(Sborder.getXPosition(), Sborder.getYPosition(), 
+									Sborder.getWidth(), Sborder.getHeight()))
+					{
+						String col;
+						col = Sborder.getColour();
+						for (c = 0; c < bottomColour.length && col != bottomColour[c]; i++)
+							;
+						Sborder.setColour(bottomColour[c]);
+						raindrop[i].destroy(arena);	// destroy raindrop
+						raindrop[i] = null;
+						createRain(level, maxLevel);
+					}
+				}
+			}
 			if (arena.leftPressed())
 				bucket.moveLeft(PWMin + bucketSize/2);
 			else if (arena.rightPressed())
