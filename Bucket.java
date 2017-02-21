@@ -72,6 +72,25 @@ public class Bucket
 		numFilled = 0;
 	}	
  
+	/**
+	 * destroy removes each bucket Rectangle from the arena and dereferences it
+	 * @param arena GameArea object for removing bucket Rectangles
+	 */
+	public void destroy(GameArena arena)
+	{
+		// destroy the insides
+		for (int i = 0; i < numInsides; i++)
+		{
+			arena.removeRectangle(inside[i]);	// remove it from the arena
+			inside[i] = null;			// dereference it
+		}
+		// destroy the outline
+		for (int i = 0; i < outline.length; i++)
+		{
+			arena.removeRectangle(outline[i]);	// remove it from the arena
+			outline[i] = null;			// dereference it
+		}
+	}
 
 	/**
 	 * Move the Bucket Right
@@ -93,8 +112,8 @@ public class Bucket
 		for (i = 0; i < numOutlines; i++)
 			outline[i].moveRight(xMax);
 		// now move the bucket insides
-		for (i = 0; i < numInsides; i++)	// THIS IS NOT GOOD ENOUGH
-			inside[i].moveRight(xMax);	// THE INSIDES SHOULD NOT BOUNCE SEPARATELY TO THE OUTLINE
+		for (i = 0; i < numInsides; i++)
+			inside[i].moveRight(xMax);
 		return true;
 	}
 
@@ -118,8 +137,8 @@ public class Bucket
 		for (i = 0; i < numOutlines; i++)
 			outline[i].moveLeft(xMin);
 		// now move the bucket insides
-		for (i = 0; i < numInsides; i++)	// THIS IS NOT GOOD ENOUGH
-			inside[i].moveLeft(xMin);	// THE INSIDES SHOULD NOT BOUNCE SEPARATELY TO THE OUTLINE
+		for (i = 0; i < numInsides; i++)
+			inside[i].moveLeft(xMin);
 		return true;
 	}
 
@@ -179,5 +198,4 @@ public class Bucket
 	{
 		return height;
 	}
-
 }
