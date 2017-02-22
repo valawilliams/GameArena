@@ -10,7 +10,7 @@ public class Bucket
 	private double width;				// The widest part of this Bucket
 	private double height;				// The highest part of this Bucket
 	private String outlineColour = "YELLOW";	// The colour of the Bucket outline
-	private String insideColour = "PINK";		// The initial colour of the inside of the Bucket
+	private String insideColour = "BLACK";		// The initial colour of the inside of the Bucket
 	private double xIncrement;			// The distance for this Bucket to slide each time
 
 	// The relative width and height of the rectangles making up the Bucket shape

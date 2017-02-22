@@ -16,10 +16,12 @@ public class Gameplay {
 				 "#FFB6B6", "#FFDADA", "#FFFFFF", "#D4FFFF", 
 				 "#AAFFFF", "#7FFFFF", "#55FFFF", "#2AFFFF", 
 				 "CYAN"};
-	int bucketSize = 100;			// size of bucket
+	int maxBucketSize = 100;		// size of bucket (modified by level)
 	int bucketMovement = 10;		// distance for bucket to slide
 	int maxRainDrops = 100;			// maximum number of raindrops
 	int rainDropsPerLevel = 2;		// number of raindrops per level
+						// rate bucket fills per raindrop at each level
+	int bucketFillRate[] = {5, 5, 4, 2, 1, 1, 1, 1, 1, 1, 1};
 
 	// GameArena sizes/positions
 	double GAWMax; 			// arena Max Width - right hand side of arena
@@ -95,11 +97,12 @@ public class Gameplay {
 	/**
 	 * createBucket creates a bucket at the bottom of the game play arena
 	 * @param level the current game level (used to vary size of bucket)
+	 * @param maxLevel the maximum game level (used to vary size of bucket)
 	 */
-	public void createBucket(int level)
+	public void createBucket(int level, int maxLevel)
 	{
-		bucket = new Bucket(GAWMid, bottomEdgeY-(bucketSize/2), 
-					bucketSize, bucketSize, 
+		int bSize = getSizeOfBucket(level, maxLevel);
+		bucket = new Bucket(GAWMid, bottomEdgeY-(bSize/2), bSize, bSize, 
 					(double)bucketMovement, arena);
 		Sborder.setColour(bottomColour[0]);		// reset colour of bottom border to start position
 
@@ -163,6 +166,7 @@ public class Gameplay {
 	 * play allows the user to play the game, and catch the raindrops
 	 * returns when the user has finished the level
 	 * @param level the current game level
+	 * @param maxLevel the maximum game level
 	 * @return true if bucket full, false if bottom is saturated with rain
 	 */
 	public boolean play(int level, int maxLevel)
@@ -182,8 +186,8 @@ public class Gameplay {
 					if (raindrop[i].touching(bucket.getXPosition(), bucket.getYPosition(), 
 								 bucket.getWidth(), bucket.getHeight()))
 					{
-						if (bucket.fill(1))	// change the fill amount depending on level
-							return true;	// return true if bucket is full
+						if (bucket.fill(bucketFillRate[level]))	// change the fill amount depending on level
+							return true;		// return true if bucket is full
 						raindrop[i].destroy(arena);	// destroy raindrop
 						raindrop[i] = null;
 						moreRainNeeded = true;
@@ -196,7 +200,7 @@ public class Gameplay {
 						while (c < bottomColour.length-1 && col != bottomColour[c])
 							c++;
 						if (bottomColour[c+1] == "CYAN")
-							return false;	// return false if bottom edge is false
+							return false;		// return false if bottom edge is false
 						Sborder.setColour(bottomColour[c+1]);
 						raindrop[i].destroy(arena);	// destroy raindrop
 						raindrop[i] = null;
@@ -209,15 +213,21 @@ public class Gameplay {
 			if (arena.leftPressed())
 				//bucket.moveLeft(PWMin+bucketSize/2-EdgesX); //goes halfway into edge
 				//bucket.moveLeft(PWMin+bucketSize/2);	// stops Edge distance away
-				bucket.moveLeft(PWMin+(bucketSize-EdgesX)/2); // touches the Edge, but doesn't show side of bucket
+				bucket.moveLeft(PWMin+(getSizeOfBucket(level, maxLevel) - EdgesX)/2); // touches the Edge, but doesn't show side of bucket
 			else if (arena.rightPressed())
-				bucket.moveRight(PWMax-(bucketSize-EdgesX)/2);
+				bucket.moveRight(PWMax-(getSizeOfBucket(level, maxLevel) - EdgesX)/2);
 		}
 	}
 
 	private int getSizeOfRainDrops(int level, int maxLevel)
 	{
 		double size = (((maxLevel + 1.0 - level)/maxLevel) * maxRainDropSize);
+		return((int)size);
+	}
+
+	private int getSizeOfBucket(int level, int maxLevel)
+	{
+		double size = (((maxLevel + 1.0 - level)/maxLevel) * maxBucketSize);
 		return((int)size);
 	}
 }
