@@ -109,8 +109,9 @@ public class Bucket
 
 		// move along all the Bucket components
 		// first move the bucket outlines
-		for (i = 0; i < numOutlines; i++)
-			outline[i].moveRight(xMax);
+		outline[0].moveRight(xMax - (width/2) + (outlineWidth/2));
+		outline[1].moveRight(xMax + (width/2) - (outlineWidth/2));
+		outline[2].moveRight(xMax);
 		// now move the bucket insides
 		for (i = 0; i < numInsides; i++)
 			inside[i].moveRight(xMax);
@@ -134,8 +135,9 @@ public class Bucket
 
 		// move along all the Bucket components
 		// first move the bucket outlines
-		for (i = 0; i < numOutlines; i++)
-			outline[i].moveLeft(xMin);
+		outline[0].moveLeft(xMin - (width/2) + (outlineWidth/2));
+		outline[1].moveLeft(xMin + (width/2) - (outlineWidth/2));
+		outline[2].moveLeft(xMin);
 		// now move the bucket insides
 		for (i = 0; i < numInsides; i++)
 			inside[i].moveLeft(xMin);
