@@ -12,9 +12,9 @@ public class Gameplay {
 	int rainMovement = 5;			// distance for rain to fall (modified by level)
 	String borderColour = "GREY";		// changed from "#999999"
 	String bottomColour[] = {"RED",		// changed from "#CC1100"
-				 "#D07777", "#E09F9F", "#F0BFBF", "#F0DFDF", 
-				 "#E0FFFF", "#D0FFFF", "#C0FFFF", "#B0FFFF", 
-				 "#A0FFFF", "#90FFFF", "#70FFFF", "#30FFFF", 
+				 "#FF2424", "#FF4848", "#FF6D6D", "#FF9191", 
+				 "#FFB6B6", "#FFDADA", "#FFFFFF", "#D4FFFF", 
+				 "#AAFFFF", "#7FFFFF", "#55FFFF", "#2AFFFF", 
 				 "CYAN"};
 	int bucketSize = 100;			// size of bucket
 	int bucketMovement = 10;		// distance for bucket to slide
