@@ -178,7 +178,7 @@ public class Gameplay {
 				if (raindrop[i] != null)
 				{
 					boolean moreRainNeeded = false;
-					raindrop[i].moveDown(bottomEdgeY-sizeOfRainDrops/2);
+					raindrop[i].moveDown(bottomEdgeY);
 					if (raindrop[i].touching(bucket.getXPosition(), bucket.getYPosition(), 
 								 bucket.getWidth(), bucket.getHeight()))
 					{
@@ -207,9 +207,9 @@ public class Gameplay {
 				}
 			}
 			if (arena.leftPressed())
-				bucket.moveLeft(PWMin + bucketSize/2);
+				bucket.moveLeft(PWMin);
 			else if (arena.rightPressed())
-				bucket.moveRight(PWMax - bucketSize/2);
+				bucket.moveRight(PWMax);
 		}
 	}
 
