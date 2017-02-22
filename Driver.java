@@ -5,8 +5,8 @@ public class Driver
 	{
 		boolean gameResult;
 		int maxLevel = 10;		// there are 10 levels in total (1 to 10)
-						// NOTE: if you increase maxLevel, you must 
-						// extend bucketFillRate[] in Gameplay.java
+					// NOTE: if you increase maxLevel, you must 
+					// extend bucketFillRate[] and scaling[] in Gameplay.java
 		int level = 1;			// start at the lowest level
 
 		//create the game
@@ -14,7 +14,7 @@ public class Driver
 
 		while (level <= maxLevel)
 		{
-			game.createBucket(level, maxLevel);
+			game.createBucket(level);
 			game.createRain(level, maxLevel);
 			gameResult = game.play(level, maxLevel);
 			game.deleteRain(level);

@@ -1,6 +1,6 @@
 /**
  * This Class launches the Game Arena with a Border
- * @author Daniel Lewis
+ * @author Daniel Lewis, Val Williams
  *
  */
 
@@ -9,7 +9,7 @@ public class Gameplay {
 	int maxArenaWidth = 900;
 	int maxArenaHeight = 900;		// decreased from 1000 to fit on screen
 	int maxRainDropSize = 60;		// size of rain drop (modified by level)
-	int rainMovement = 2;			// distance for rain to fall (modified by level)
+	int rainMovement = 4;			// distance for rain to fall (modified by level)
 	String borderColour = "GREY";		// changed from "#999999"
 	String bottomColour[] = {"RED",		// changed from "#CC1100"
 				 "#FF2424", "#FF4848", "#FF6D6D", "#FF9191", 
@@ -22,6 +22,7 @@ public class Gameplay {
 	int rainDropsPerLevel = 2;		// number of raindrops per level
 						// rate bucket fills per raindrop at each level
 	int bucketFillRate[] = {5, 5, 4, 2, 1, 1, 1, 1, 1, 1, 1};
+	double scaling[] = {1.0, 1.0, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5};
 
 	// GameArena sizes/positions
 	double GAWMax; 			// arena Max Width - right hand side of arena
@@ -97,11 +98,10 @@ public class Gameplay {
 	/**
 	 * createBucket creates a bucket at the bottom of the game play arena
 	 * @param level the current game level (used to vary size of bucket)
-	 * @param maxLevel the maximum game level (used to vary size of bucket)
 	 */
-	public void createBucket(int level, int maxLevel)
+	public void createBucket(int level)
 	{
-		int bSize = getSizeOfBucket(level, maxLevel);
+		double bSize = getSizeOfBucket(level);
 		bucket = new Bucket(GAWMid, bottomEdgeY-(bSize/2), bSize, bSize, 
 					(double)bucketMovement, arena);
 		Sborder.setColour(bottomColour[0]);		// reset colour of bottom border to start position
@@ -125,7 +125,7 @@ public class Gameplay {
 	public void createRain(int level, int maxLevel)
 	{
 		int numberOfRainDrops = level * rainDropsPerLevel;
-		double sizeOfRainDrops = getSizeOfRainDrops(level, maxLevel);	// level determines what percentage of maxsize
+		double sizeOfRainDrops = getSizeOfRainDrops(level);	// level determines what percentage of maxsize
 
 		// create raindrops
 		// eventually these will be placed randomly along the top
@@ -139,7 +139,7 @@ public class Gameplay {
 			if (raindrop[i] == null)
 				raindrop[i] = new Raindrop(xPos, PHMin, 
 							   sizeOfRainDrops, sizeOfRainDrops, 
-							   (double)(rainMovement + level/4), arena);
+							   (double)(rainMovement *scaling[maxLevel+1-level]), arena);
 			xPos += xGap;
 		}
 	}
@@ -172,7 +172,7 @@ public class Gameplay {
 	public boolean play(int level, int maxLevel)
 	{
 		int numberOfRainDrops = level * rainDropsPerLevel;
-		double sizeOfRainDrops = getSizeOfRainDrops(level, maxLevel);	// level determines what percentage of maxsize
+		double sizeOfRainDrops = getSizeOfRainDrops(level);	// level determines what percentage of maxsize
 
 		while (true)
 		{
@@ -211,24 +211,20 @@ public class Gameplay {
 				}
 			}
 			if (arena.leftPressed())
-				//bucket.moveLeft(PWMin+bucketSize/2-EdgesX); //goes halfway into edge
-				//bucket.moveLeft(PWMin+bucketSize/2);	// stops Edge distance away
-				bucket.moveLeft(PWMin+(getSizeOfBucket(level, maxLevel) - EdgesX)/2); // touches the Edge, but doesn't show side of bucket
+				bucket.moveLeft(PWMin+(getSizeOfBucket(level) - EdgesX)/2); // touches the Edge, but doesn't show side of bucket
 			else if (arena.rightPressed())
-				bucket.moveRight(PWMax-(getSizeOfBucket(level, maxLevel) - EdgesX)/2);
+				bucket.moveRight(PWMax-(getSizeOfBucket(level) - EdgesX)/2);
 		}
 	}
 
-	private int getSizeOfRainDrops(int level, int maxLevel)
+	private double getSizeOfRainDrops(int level)
 	{
-		double size = (((maxLevel + 1.0 - level)/maxLevel) * maxRainDropSize);
-		return((int)size);
+		return(maxRainDropSize * scaling[level]);
 	}
 
-	private int getSizeOfBucket(int level, int maxLevel)
+	private double getSizeOfBucket(int level)
 	{
-		double size = (((maxLevel + 1.0 - level)/maxLevel) * maxBucketSize);
-		return((int)size);
+		return(maxBucketSize * scaling[level]);
 	}
 }
 
