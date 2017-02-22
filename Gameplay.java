@@ -207,9 +207,11 @@ public class Gameplay {
 				}
 			}
 			if (arena.leftPressed())
-				bucket.moveLeft(PWMin);
+				//bucket.moveLeft(PWMin+bucketSize/2-EdgesX); //goes halfway into edge
+				//bucket.moveLeft(PWMin+bucketSize/2);	// stops Edge distance away
+				bucket.moveLeft(PWMin+(bucketSize-EdgesX)/2); // touches the Edge, but doesn't show side of bucket
 			else if (arena.rightPressed())
-				bucket.moveRight(PWMax);
+				bucket.moveRight(PWMax-(bucketSize-EdgesX)/2);
 		}
 	}
 
