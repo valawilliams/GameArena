@@ -8,8 +8,8 @@ public class Gameplay {
 
 	int maxArenaWidth = 900;
 	int maxArenaHeight = 900;		// decreased from 1000 to fit on screen
-	int maxRainDropSize = 50;		// size of rain drop (modified by level)
-	int rainMovement = 5;			// distance for rain to fall (modified by level)
+	int maxRainDropSize = 60;		// size of rain drop (modified by level)
+	int rainMovement = 2;			// distance for rain to fall (modified by level)
 	String borderColour = "GREY";		// changed from "#999999"
 	String bottomColour[] = {"RED",		// changed from "#CC1100"
 				 "#FF2424", "#FF4848", "#FF6D6D", "#FF9191", 
@@ -136,7 +136,7 @@ public class Gameplay {
 			if (raindrop[i] == null)
 				raindrop[i] = new Raindrop(xPos, PHMin, 
 							   sizeOfRainDrops, sizeOfRainDrops, 
-							   (double)(rainMovement + level), arena);
+							   (double)(rainMovement + level/4), arena);
 			xPos += xGap;
 		}
 	}
@@ -217,7 +217,8 @@ public class Gameplay {
 
 	private int getSizeOfRainDrops(int level, int maxLevel)
 	{
-		return(((maxLevel + 1 - level)/maxLevel) * maxRainDropSize);
+		double size = (((maxLevel + 1.0 - level)/maxLevel) * maxRainDropSize);
+		return((int)size);
 	}
 }
 
