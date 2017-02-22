@@ -139,7 +139,7 @@ public class Gameplay {
 			if (raindrop[i] == null)
 				raindrop[i] = new Raindrop(xPos, PHMin, 
 							   sizeOfRainDrops, sizeOfRainDrops, 
-							   (double)(rainMovement *scaling[maxLevel+1-level]), arena);
+							   (double)(rainMovement*scaling[maxLevel+1-level]), arena);
 			xPos += xGap;
 		}
 	}
