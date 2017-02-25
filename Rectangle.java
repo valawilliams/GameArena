@@ -75,7 +75,7 @@ public class Rectangle
 
 	/**
 	 * Sets the colour of this Rectangle.
-	 * @params a textual description of the colour of this Rectangle.
+	 * @param newColour a textual description of the colour of this Rectangle.
 	 */
 	public void setColour(String newColour)
 	{
@@ -138,7 +138,7 @@ public class Rectangle
 
 	/**
 	 * Checks whether Rectangle touching another Rectangle
-	 * @param Rectangle otherRect
+	 * @param other Rectangle that this may be touching
 	 * @return true if touching
 	 */
 	public Boolean touching(Rectangle other)
@@ -155,6 +155,13 @@ public class Rectangle
 
 	/**
 	 * Constructor
+	 * @param x position of Rectangle on x-axis
+	 * @param y position of Rectangle on y-axis
+	 * @param w width of Rectangle
+	 * @param h height of Rectangle
+	 * @param col colour of Rectangle
+	 * @param xInc movement of Rectangle along x-axis
+	 * @param yInc movement of Rectangle along y-axis
 	 */
 	public Rectangle(double x, double y, double w, double h, String col, double xInc, double yInc)
 	{

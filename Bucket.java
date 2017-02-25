@@ -73,8 +73,8 @@ public class Bucket
 	}	
  
 	/**
-	 * destroy removes each bucket Rectangle from the arena and dereferences it
-	 * @param arena GameArea object for removing bucket Rectangles
+	 * destroy: remove each bucket Rectangle from the arena and dereference it
+	 * @param arena from which to remove bucket Rectangles
 	 */
 	public void destroy(GameArena arena)
 	{
@@ -93,7 +93,7 @@ public class Bucket
 	}
 
 	/**
-	 * Move the Bucket Right
+	 * Move the Bucket Right, stopping when it reaches xMax
 	 * @param xMax the maximum xPosition
 	 * @return false if unable to move
 	 */
@@ -119,7 +119,7 @@ public class Bucket
 	}
 
 	/**
-	 * Move the Bucket Left
+	 * Move the Bucket Left, stopping when it reaches xMin
 	 * @param xMin the minimum xPosition
 	 * @return false if unable to move
 	 */
@@ -147,7 +147,7 @@ public class Bucket
 	/**
 	 * Fill the bucket - change the colour of the specified number of inside elements
 	 * @param numberToFill number of inside elements to fill
-	 * @returns true if bucket is full
+	 * @return true if bucket is full
 	 **/
 	public Boolean fill(int numberToFill)
 	{
@@ -166,7 +166,7 @@ public class Bucket
 	}
  
 	/**
-	 * Obtains the current position of this bucket
+	 * Obtain the current position of this bucket on the x-axis
 	 * @return the X coordinate of this Bucket within the GameArena.
 	 */
 	public double getXPosition()
@@ -175,7 +175,7 @@ public class Bucket
 	}
 
 	/**
-	 * Obtains the current position of this bucket
+	 * Obtain the current position of this bucket on the y-axis
 	 * @return the Y coordinate of this Bucket within the GameArena.
 	 */
 	public double getYPosition()
@@ -184,7 +184,7 @@ public class Bucket
 	}
 
 	/**
-	 * Obtains the width of this Bucket
+	 * Obtain the width of this Bucket
 	 * @return the width of this Bucket, in pixels.
 	 */
 	public double getWidth()
@@ -193,7 +193,7 @@ public class Bucket
 	}
 
 	/**
-	 * Obtains the height of this Bucket
+	 * Obtain the height of this Bucket
 	 * @return the height of this Bucket, in pixels.
 	 */
 	public double getHeight()
