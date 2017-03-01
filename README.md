@@ -8,4 +8,4 @@ This code is still under development.
 Things still to do:  
 1. decide what to do when ground completely saturated (at the moment, level is decreased back to 1).  
 2. decide what to do when all levels achieved.  
-3. add code to position raindrops randomly on creation.  
+3. adjust speed of higher levels more gradually, to increase chances of winning
