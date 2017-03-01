@@ -14,7 +14,7 @@ public class Raindrop
 
 	private int numDrops = 8;
 
-	private Rectangle drop[] = new Rectangle[numDrops];	// The rectangles making up the raindrop shape
+	private MovingRectangle drop[] = new MovingRectangle[numDrops];	// The rectangles making up the raindrop shape
 	// The relative width and height of the rectangles making up the raindrop shape
 	// the numbers are the ratio of each rectangle compared to the whole (i.e. each array adds up to 1.0)
 	private double dropWidth[] =  { 0.02, 0.04, 0.06, 0.12, 0.17, 0.19, 0.23, 0.18 };
@@ -47,7 +47,7 @@ public class Raindrop
 		{
 			double thisHeight = h*dropHeight[i];
 			thisYPosition += thisHeight/2;	// move down to ycentre of this rectangle
-			drop[i] = new Rectangle(x, thisYPosition, w*dropWidth[i], thisHeight, colour, 0, yInc);
+			drop[i] = new MovingRectangle(x, thisYPosition, w*dropWidth[i], thisHeight, colour, 0, yInc);
 			arena.addRectangle(drop[i]);
 			thisYPosition += thisHeight/2;	// move down to ybottom of this rectangle
 		}

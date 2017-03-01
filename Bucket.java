@@ -1,5 +1,5 @@
 /**
- * Uses multiple instances of Rectangle to model a Bucket.
+ * Uses multiple instances of MovingRectangle to model a Bucket.
  * This class represents a Bucket object. When combined with the GameArena class,
  * instances of the Bucket class can be displayed on the screen.
  */
@@ -23,8 +23,8 @@ public class Bucket
 	private int numInsides = 20;			// number of rectangles inside bucket
 	private int numFilled = 0;			// count of rectangles inside bucket that are full
 
-	private Rectangle outline[] = new Rectangle[numOutlines];	// The rectangles making up the bucket outline
-	private Rectangle inside[] = new Rectangle[numInsides];		// The rectangles making up the bucket insides
+	private MovingRectangle outline[] = new MovingRectangle[numOutlines];	// The rectangles making up the bucket outline
+	private MovingRectangle inside[] = new MovingRectangle[numInsides];	// The rectangles making up the bucket insides
 
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ public class Bucket
 	 * @param w width of Bucket
 	 * @param h height of Bucket
 	 * @param xInc distance Bucket will slide
-	 * @param arena GameArea object for adding Bucket Rectangles
+	 * @param arena GameArea object for adding Bucket rectangles
 	 */
 	public Bucket(double x, double y, double w, double h, double xInc, GameArena arena)
 	{
@@ -48,11 +48,11 @@ public class Bucket
 		double thisYPosition = y + (h/2);
 
 		// create the Bucket outline from its component rectangles
-		outline[0] = new Rectangle((x - (w/2) + (outlineWidth/2)), y, 
+		outline[0] = new MovingRectangle((x - (w/2) + (outlineWidth/2)), y, 
 						     outlineWidth, h, outlineColour, xInc, 0);
-		outline[1] = new Rectangle((x + (w/2) - (outlineWidth/2)), y, 
+		outline[1] = new MovingRectangle((x + (w/2) - (outlineWidth/2)), y, 
 						     outlineWidth, h, outlineColour, xInc, 0);
-		outline[2] = new Rectangle(x, (thisYPosition - (outlineHeight/2)), 
+		outline[2] = new MovingRectangle(x, (thisYPosition - (outlineHeight/2)), 
 						     w, outlineHeight, outlineColour, xInc, 0);
 		arena.addRectangle(outline[0]);
 		arena.addRectangle(outline[1]);
@@ -64,7 +64,7 @@ public class Bucket
 		for (int i = 0; i < numInsides; i++)
 		{
 			thisYPosition = thisYPosition - insideHeight/2;
-			inside[i] = new Rectangle(x, thisYPosition, 
+			inside[i] = new MovingRectangle(x, thisYPosition, 
 						  (w - (2*outlineWidth)), insideHeight, insideColour, xInc, 0);
 			arena.addRectangle(inside[i]);
 			thisYPosition = thisYPosition - insideHeight/2;

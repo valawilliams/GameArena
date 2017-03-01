@@ -10,17 +10,17 @@ public class Ball
 	// Feel free to more instance variables if you think it will 
 	// support your work... 
 	
-	private double xPosition;			// The X coordinate of this Ball
-	private double yPosition;			// The Y coordinate of this Ball
-	private double size;				// The diameter of this Ball
-	private String colour = "WHITE";	// The colour of this Ball
+	protected double xPosition;		// The X coordinate of this Ball
+	protected double yPosition;		// The Y coordinate of this Ball
+	protected double size;			// The diameter of this Ball
+	protected String colour = "WHITE";	// The colour of this Ball
 
-										// Permissable colours are 8 bit hexadecimal 
+						// Permissable colours are 8 bit hexadecimal 
                                         // RGB values in the format #RRGGBB. e.g.
                                         //
                                         // Pure red is FF0000
-                                        // Pure red is 00FF00
-                                        // Pure red is 0000FF
+                                        // Pure green is 00FF00
+                                        // Pure blue is 0000FF
 
 	/**
 	 * Obtains the current position of this Ball.

@@ -82,16 +82,14 @@ public class Gameplay {
 		
 		
 		// Draw Border	
-		Eborder = new Rectangle(GAWMax, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Left Border
-		Wborder = new Rectangle(GAWMin, GAHMid, EdgesX, GAHMax, borderColour, 0, 0);	// Right Border
-		Nborder = new Rectangle(GAWMid, GAHMin, GAWMax, EdgesY, borderColour, 0, 0);	// Top Border
-		Sborder = new Rectangle(GAWMid, GAHMax-redLineDepth/2, PWMax, redLineDepth, bottomColour[0], 0, 0);	// Bottom Border
+		Eborder = new Rectangle(GAWMax, GAHMid, EdgesX, GAHMax, borderColour);	// Left Border
+		Wborder = new Rectangle(GAWMin, GAHMid, EdgesX, GAHMax, borderColour);	// Right Border
+		Nborder = new Rectangle(GAWMid, GAHMin, GAWMax, EdgesY, borderColour);	// Top Border
+		Sborder = new Rectangle(GAWMid, GAHMax-redLineDepth/2, PWMax, redLineDepth, bottomColour[0]);	// Bottom Border
 		arena.addRectangle(Eborder);		// show border rectangle at right of GameArena
 		arena.addRectangle(Wborder);		// show border rectangle at left of GameArena
 		arena.addRectangle(Nborder);		// show border rectangle at top of GameArena
 		arena.addRectangle(Sborder);		// show border rectangle at bottom of GameArena
-
-		//Dropped Items Test Size = Ball Diameter 12 which equates to (24,24) Rectangle
 
 		for (int i = 0; i < maxRainDrops; i++)
 			raindrop[i] = null;
