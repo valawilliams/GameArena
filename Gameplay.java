@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * This Class launches the Game Arena with a Border
  * @author Daniel Lewis, Val Williams
@@ -127,6 +129,12 @@ public class Gameplay {
 		int numberOfRainDrops = level * rainDropsPerLevel;
 		double sizeOfRainDrops = getSizeOfRainDrops(level);	// level determines what percentage of maxsize
 
+		Random random = new Random();
+
+		int randomNumber = random.nextInt();
+
+
+
 		// create raindrops
 		// eventually these will be placed randomly along the top
 		// for now, just space them equally
@@ -137,9 +145,14 @@ public class Gameplay {
 		for (int i = 0; i < numberOfRainDrops; i++)
 		{
 			if (raindrop[i] == null)
-				raindrop[i] = new Raindrop(xPos, PHMin, 
+			{
+				double randDbl = (xMax - xMin) * 100;
+				int rand = random.nextInt((int)randDbl);
+				randDbl = (double)(rand) / 100 + xMin;
+				raindrop[i] = new Raindrop(randDbl, PHMin, 
 							   sizeOfRainDrops, sizeOfRainDrops, 
 							   (double)(rainMovement*scaling[maxLevel+1-level]), arena);
+			}
 			xPos += xGap;
 		}
 	}
